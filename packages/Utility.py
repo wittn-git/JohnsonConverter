@@ -8,7 +8,7 @@ class Font():
     def get_font(self):
         return self.font
 
-class Message:
+class MessageDialog:
     def show_error(self, message):
         messagebox.showerror('Error', message)
         raise ValueError('Error')

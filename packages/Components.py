@@ -1,7 +1,7 @@
-from tkinter import BOTH, Button, Canvas, LEFT, Label, PhotoImage, Tk, DISABLED, Text, END
+from tkinter import BOTH, Button, Canvas, LEFT, Label, PhotoImage, Tk, DISABLED, Text, END, Message
 import tkinter
 from PIL import Image, ImageTk
-from packages.Utility import Font
+from packages.Utility import Font, MessageDialog
 
 class DLabel:
 
@@ -18,6 +18,23 @@ class DLabel:
 
     def get_element(self):
         return Label(self.root, text=self.text, font = self.font.get_font(), justify=LEFT)
+
+class DMessage:
+
+    def __init__(self, text, fontsize, x_position, y_position, width, alignment, root):
+        self.text = text
+        self.font = Font(fontsize)
+        self.x_positon = x_position
+        self.y_position = y_position
+        self.width = width
+        self.alignment = alignment
+        self.root = root.root
+        
+    def get_properties(self):
+        return [self.x_positon, self.y_position, None, None]
+
+    def get_element(self):
+        return Message(self.root, text=self.text, font = self.font.get_font(), justify=self.alignment, width=self.width)
 
 class DImageLabel:
 
@@ -59,7 +76,7 @@ class DButton:
 
 class DText:
 
-    def __init__(self, x_position, y_position, width, height, disabled, root):
+    def __init__(self, x_position, y_position, width, height, disabled, multiline, root):
         self.font = Font(16)
         self.x_positon = x_position
         self.y_position = y_position
@@ -71,12 +88,15 @@ class DText:
 
         self.text = Text(self.root, font = self.font.get_font())
         if disabled == True: self.text.config(state=DISABLED)
+        if multiline == False: 
+            self.text.config(wrap='none')
 
     def get_properties(self):
         return [self.x_positon, self.y_position, self.width, self.height]
     
-    def add_text(self, text):
-        if text not in self.content:
+    def add_text(self, text, limit):
+        if(limit == len(self.content)): MessageDialog().show_error("Limit of files has been reached. Clear files to add files again.")
+        elif text not in self.content:
             self.content.append(text)
             self.set_text('\n'.join(self.content))
     
@@ -132,7 +152,7 @@ class DFrame:
     
     def add_widget(self, element):
         widget = element.get_element()
-        properties = element.get_properties()
+        properties = element.get_properties()       
         widget.pack()
         widget.place(x=properties[0], y=properties[1])
         if properties[2] != None: widget.place(width=properties[2])
