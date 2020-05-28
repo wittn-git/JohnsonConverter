@@ -15,11 +15,11 @@ class Section:
         self.elements = []
         self.root = root
         self.workfiles, self.destination_folder = [], None
-        self.command = lambda: get_command()
+        self.command = lambda: self.get_command()
         self.add_elements()
 
     def get_command(self):
-        CommandHandler().get_command(self.number, self.workfiles, self.destination_folder, self.destination_file_text.get_contents())
+        CommandHandler().get_command(self.number, self.workfiles, self.destination_folder, self.destination_file_text.get_contents().strip(), self.elements)
         self.workfiles, self.destination_folder = [], None
 
     def set_destination_folder(self):

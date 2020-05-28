@@ -5,10 +5,10 @@ from Utility import Font
 
 class DLabel:
 
-    def __init__(self, text, fontsize, x_positon, y_position, width, root):
+    def __init__(self, text, fontsize, x_position, y_position, width, root):
         self.text = text
         self.font = Font(fontsize)
-        self.x_positon = x_positon
+        self.x_positon = x_position
         self.y_position = y_position
         self.width = width
         self.root = root.root
@@ -67,6 +67,7 @@ class DText:
         self.height = height
         self.root = root.root
         self.content = []
+        self.disabled = disabled
 
         self.text = Text(self.root, font = self.font.get_font())
         if disabled == True: self.text.config(state=DISABLED)
@@ -90,7 +91,7 @@ class DText:
         self.text.config(state='normal')
         self.text.delete('1.0',END)
         self.text.update_idletasks()
-        self.text.config(state=DISABLED)
+        if self.disabled == True: self.text.config(state=DISABLED)
         self.content = []
     
     def get_contents(self):
