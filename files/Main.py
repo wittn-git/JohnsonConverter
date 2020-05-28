@@ -3,7 +3,7 @@ from Section import Section
 from PIL import Image
     
 frame = DFrame('JohnsonConverter')
-icon = Image.open('icon.gif')
+icon = Image.open('..\images\icon.gif')
 frame.set_icon(icon)
 
 elements = []
@@ -29,5 +29,8 @@ for section in sections:
     lines.append(section.line)
 for line in lines:
     frame.add_line(line)
+
+coming_soon = DLabel('Coming soon...', 16, 300*len(sections)+6, 210+3, None, frame)
+frame.add_widget(coming_soon)
 
 frame.show()
