@@ -1,0 +1,1 @@
+pyinstaller --noconfirm --onefile --noconsole --icon "/home/wittn/workspace/python/JohnsonConverter/images/icon.ico" --name "JohnsonConverter" --hiddenimport "PIL._tkinter_finder"  "/home/wittn/workspace/python/JohnsonConverter/Main.py"
