@@ -1,13 +1,13 @@
-from tkinter import BOTH, Button, Canvas, LEFT, Label, PhotoImage, Tk
+from tkinter import BOTH, Button, Canvas, LEFT, Label, PhotoImage, Tk, DISABLED, Text, END
 import tkinter
 from PIL import Image, ImageTk
 from Utility import Font
 
 class DLabel:
 
-    def __init__(self, text, font, x_positon, y_position, width, root):
+    def __init__(self, text, fontsize, x_positon, y_position, width, root):
         self.text = text
-        self.font = font
+        self.font = Font(fontsize)
         self.x_positon = x_positon
         self.y_position = y_position
         self.width = width
@@ -41,8 +41,8 @@ class DImageLabel:
 
 class DButton:
 
-    def __init__(self, x_position, y_position, width, height, text, command, root):
-        self.font = Font(20).get_font()
+    def __init__(self, x_position, y_position, width, height, text, command, fontsize, root):
+        self.font = Font(fontsize)
         self.x_positon = x_position
         self.y_position = y_position
         self.width = width
@@ -55,7 +55,49 @@ class DButton:
         return [self.x_positon, self.y_position, self.width, self.height]
     
     def get_element(self):
-        return Button(self.root, text = self.text, command = self.command, font=self.font)
+        return Button(self.root, text = self.text, command = self.command, font=self.font.get_font())
+
+class DText:
+
+    def __init__(self, x_position, y_position, width, height, disabled, root):
+        self.font = Font(16)
+        self.x_positon = x_position
+        self.y_position = y_position
+        self.width = width
+        self.height = height
+        self.root = root.root
+        self.content = []
+
+        self.text = Text(self.root, font = self.font.get_font())
+        if disabled == True: self.text.config(state=DISABLED)
+
+    def get_properties(self):
+        return [self.x_positon, self.y_position, self.width, self.height]
+    
+    def add_text(self, text):
+        if text not in self.content:
+            self.content.append(text)
+            self.set_text('\n'.join(self.content))
+    
+    def set_text(self, text):
+        self.text.config(state='normal')
+        self.text.delete('1.0',END)
+        self.text.insert('1.0', text)
+        self.text.update_idletasks()
+        self.text.config(state=DISABLED)
+
+    def clear_content(self):
+        self.text.config(state='normal')
+        self.text.delete('1.0',END)
+        self.text.update_idletasks()
+        self.text.config(state=DISABLED)
+        self.content = []
+    
+    def get_contents(self):
+        return self.text.get('1.0',END)
+        
+    def get_element(self):
+        return self.text
 
 class DLine:
 
