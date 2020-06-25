@@ -136,7 +136,7 @@ class DFrame:
         self.root = tkinter.Tk()
         self.root.wm_title(title)
         self.w, self.h = self.root.winfo_screenwidth(), self.root.winfo_screenheight()
-        self.root.geometry('%dx%d+0+0' % (self.w, self.h))
+        self.root.state('zoomed')
 
         self.canvas = Canvas(self.root)
         self.canvas.pack(fill=BOTH, expand=1)
