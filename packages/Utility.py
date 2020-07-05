@@ -11,7 +11,6 @@ class Font():
 class MessageDialog:
     def show_error(self, message):
         messagebox.showerror('Error', message)
-        raise ValueError('Error')
     
     def show_message(self, message):
         messagebox.showinfo('Success', message)

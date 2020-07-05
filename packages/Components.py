@@ -95,10 +95,14 @@ class DText:
         return [self.x_positon, self.y_position, self.width, self.height]
     
     def add_text(self, text, limit):
-        if(limit == len(self.content)): MessageDialog().show_error("Limit of files has been reached. Clear files to add files again.")
-        elif text not in self.content:
-            self.content.append(text)
-            self.set_text('\n'.join(self.content))
+        try:
+            if(limit == len(self.content)): 
+                raise NameError("Limit of files has been reached. Clear files to add files again.", True)
+            elif text not in self.content:
+                self.content.append(text)
+                self.set_text('\n'.join(self.content))
+        except Exception as e:
+            MessageDialog().show_error(e)
     
     def set_text(self, text):
         self.text.config(state='normal')
@@ -136,7 +140,7 @@ class DFrame:
         self.root = tkinter.Tk()
         self.root.wm_title(title)
         self.w, self.h = self.root.winfo_screenwidth(), self.root.winfo_screenheight()
-        self.root.state('zoomed')
+        self.root.attributes('-zoomed', True)
 
         self.canvas = Canvas(self.root)
         self.canvas.pack(fill=BOTH, expand=1)

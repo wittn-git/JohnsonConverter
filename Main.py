@@ -3,18 +3,21 @@ from packages.Section import Section
 from PIL import Image
 import sys
 from tkinter import LEFT
+import os
 
 image_path = ''
 if sys.platform.startswith('linux'): image_path = '/opt/JohnsonConverter/images'
-elif sys.platform.startswith('win'): image_path = 'C://Program Files//JohnsonConverter//images'
+elif sys.platform.startswith('win'): 
+    if os.path.isdir('C://Program Files'): image_path = 'C://Program Files//JohnsonConverter//images'
+    elif os.path.isdir("C://Programme"): image_path = 'C://Programme//JohnsonConverter//images'
 
 frame = DFrame('JohnsonConverter')
 
 try:
     icon = Image.open('{}/{}'.format(image_path, 'icon.gif'))
+    frame.set_icon(icon)
 except:
     pass
-frame.set_icon(icon)
 
 elements = []
 

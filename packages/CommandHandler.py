@@ -6,7 +6,7 @@ class CommandHandler:
     
     def get_command(self, command_number, workfiles, destination_directory, destination_file, elements, pages):
         try:
-            if destination_directory == None: MessageDialog().show_error('No valid destination directory entered.')
+            if destination_directory == None: raise NameError('No valid destination directory entered.')
             if not destination_file.endswith('.pdf'): destination_file += '.pdf'
 
             switcher = {
@@ -21,11 +21,12 @@ class CommandHandler:
                 if isinstance(element, DText): element.clear_content()
             return True
             
-        except ValueError as e:
+        except Exception as e:
+            MessageDialog().show_error(e)
             return False
 
     def merge(self, workfiles, destination_directory, destination_file):
-        if len(workfiles) < 2: MessageDialog().show_error("Enter at least two file to merge.")
+        if len(workfiles) < 2: raise NameError('Enter at least two file to merge.')
         pdf_merger = PdfFileMerger()
         for path in workfiles:
             pdf_merger.append(path)
@@ -38,7 +39,7 @@ class CommandHandler:
     def split(self, workfiles, destination_directory, destination_file, pages):
        
         if len(workfiles) != 1:
-            MessageDialog().show_error("Enter one file to split.")
+            raise NameError("Enter one file to split.")
 
         inputpdf = PdfFileReader(open(workfiles[0], "rb"))
 
@@ -50,9 +51,9 @@ class CommandHandler:
             if inputpdf.numPages not in pages: pages.append(inputpdf.numPages)
             if any(n < 0 for n in pages): raise ValueError('Error')
         except Exception as e:
-            MessageDialog().show_error('One or more page numbers entered were not valid.')
+            raise NameError('One or more page numbers entered were not valid.')
 
-        if any(n > inputpdf.numPages for n in pages): MessageDialog().show_error('One or more page numbers exeed the size if the document.')
+        if any(n > inputpdf.numPages for n in pages): raise NameError('One or more page numbers exeed the size if the document.')
         
         for i in range(len(pages)-1):
             outputpdf = PdfFileWriter()
