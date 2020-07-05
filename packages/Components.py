@@ -2,6 +2,7 @@ from tkinter import BOTH, Button, Canvas, LEFT, Label, PhotoImage, Tk, DISABLED,
 import tkinter
 from PIL import Image, ImageTk
 from packages.Utility import Font, MessageDialog
+import sys
 
 class DLabel:
 
@@ -102,7 +103,7 @@ class DText:
                 self.content.append(text)
                 self.set_text('\n'.join(self.content))
         except Exception as e:
-            MessageDialog().show_error(e)
+            MessageDialog().show_error(e.args[0])
     
     def set_text(self, text):
         self.text.config(state='normal')
@@ -140,7 +141,7 @@ class DFrame:
         self.root = tkinter.Tk()
         self.root.wm_title(title)
         self.w, self.h = self.root.winfo_screenwidth(), self.root.winfo_screenheight()
-        self.root.attributes('-zoomed', True)
+        self.root.state('zoomed')
 
         self.canvas = Canvas(self.root)
         self.canvas.pack(fill=BOTH, expand=1)

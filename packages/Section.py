@@ -44,7 +44,7 @@ class Section:
         self.line = DLine(self.x+self.cell_width, self.y, self.x+self.cell_width, 0, self.line_width, False, True)
        
         self.elements.append(DLabel(self.title, 26, self.x+self.line_width, self.y+3*self.line_width, self.cell_width-2*self.line_width, self.root))
-        self.elements.append(DButton(self.x+self.cell_width*0.1, self.root.h-275, self.cell_width*0.8, 80, self.title, self.command, 20, self.root))
+        self.elements.append(DButton(self.x+self.cell_width*0.1, self.root.h-175, self.cell_width*0.8, 80, self.title, self.command, 20, self.root))
         self.elements.append(DButton(self.x+self.cell_width*0.7, self.y+70+110+100, self.cell_width*0.25, 35, 'Destination\ndirectory', self.set_destination_folder, 9, self.root))
         self.elements.append(DLabel('Destination\nfilename', 9, self.x+self.cell_width*0.7, self.y+70+110+100+45, self.cell_width*0.25, self.root))
 

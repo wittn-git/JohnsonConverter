@@ -22,7 +22,7 @@ class CommandHandler:
             return True
             
         except Exception as e:
-            MessageDialog().show_error(e)
+            MessageDialog().show_error(e.args[0])
             return False
 
     def merge(self, workfiles, destination_directory, destination_file):
@@ -50,7 +50,7 @@ class CommandHandler:
             if 0 not in pages: pages.insert(0, 0)
             if inputpdf.numPages not in pages: pages.append(inputpdf.numPages)
             if any(n < 0 for n in pages): raise ValueError('Error')
-        except Exception as e:
+        except Exception:
             raise NameError('One or more page numbers entered were not valid.')
 
         if any(n > inputpdf.numPages for n in pages): raise NameError('One or more page numbers exeed the size if the document.')
